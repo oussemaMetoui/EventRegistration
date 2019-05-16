@@ -3,21 +3,22 @@ package com.oussema.eventregistration.fragment;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.preference.PreferenceManager;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -33,7 +34,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 
-public class CameraScreenFragment extends Fragment implements Updateable {
+public class CameraScreenFragment extends Fragment{
 
     private SurfaceView cameraView;
     private final String TAG = CameraScreenFragment.class.getSimpleName();
@@ -76,12 +77,6 @@ public class CameraScreenFragment extends Fragment implements Updateable {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-
-    @Override
-    public void update() {
-
     }
 
 
@@ -141,6 +136,9 @@ public class CameraScreenFragment extends Fragment implements Updateable {
                         db.addMember(
                                 new Member(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getString("email"))
                         );
+                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        if(prefs.getBoolean("key_vibrate", true))
+                            vibrate();
                     } catch (JSONException e) {
 //                        TODO : Dialog
                         e.printStackTrace();
@@ -155,6 +153,12 @@ public class CameraScreenFragment extends Fragment implements Updateable {
         super.onViewStateRestored(savedInstanceState);
     }
 
+    private void vibrate(){
+        Vibrator vibrator = (Vibrator) Objects.requireNonNull(getActivity()).getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator.hasVibrator()) {
+            vibrator.vibrate(500);
+        }
+    }
     private void showDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("hello")

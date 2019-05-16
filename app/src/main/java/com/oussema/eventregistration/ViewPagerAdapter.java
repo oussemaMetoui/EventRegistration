@@ -1,6 +1,7 @@
 package com.oussema.eventregistration;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -22,13 +23,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment =null;
         switch (i) {
             case 0: // Fragment # 0 - show camera
-                fragment = Fragment.instantiate(context, CameraScreenFragment.class.getName());
-            case 1: // Fragment # 0 - show registered list
-                fragment = Fragment.instantiate(context, AttendeesListFragment.class.getName());
+                return Fragment.instantiate(context, CameraScreenFragment.class.getName());
+            case 1: // Fragment # 1 - show registered list
+                return Fragment.instantiate(context, AttendeesListFragment.class.getName());
             default:
-                return null;
+                return fragment;
         }
-
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public int getItemPosition(Object object) {
+    public int getItemPosition(@NonNull Object object) {
         return POSITION_NONE;
     }
 }

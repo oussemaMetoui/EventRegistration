@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="General">
+        <EditTextPreference
+            android:defaultValue="20"
+            android:key="@string/key_event_capacity"
+            android:summary="20"
+            android:title="@string/title_event_capacity" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_title_other">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/key_vibrate"
+            android:summary="@string/summary_vibrate"
+            android:title="@string/title_vibrate" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_header_about">
+
+        <Preference
+            android:selectable="false"
+            android:summary="@string/summary_about" />
+
+        <Preference
+            android:summary="@string/app_version"
+            android:title="@string/title_version" />
+
+        <Preference
+            android:key="@string/key_send_feedback"
+            android:summary="@string/summary_support"
+            android:title="@string/title_send_feedback" />
+
+        <Preference android:title="@string/title_about">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/url_about" />
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>
